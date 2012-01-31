@@ -96,7 +96,7 @@
 
 (defn- write-cell [^Writer writer obj sep quote]
   (let [string (str obj)
-	must-quote (some #{sep quote \newline} string)]
+	must-quote (some #{sep quote \newline \return} string)]
     (when must-quote (.write writer (int quote)))
     (.write writer (if must-quote
 		     (str/escape string
