@@ -24,6 +24,10 @@
 1996,Jeep,Grand Cherokee,\"MUST SELL!
 air, moon roof, loaded\",4799.00")
 
+(def ^{:private true} with-cr
+  "2000,\"string with \return character\"
+")
+
 (deftest reading
   (let [csv (read-csv simple)]
     (is (= (count csv) 3))
@@ -48,6 +52,11 @@ air, moon roof, loaded\",4799.00")
   (let [string-writer (StringWriter.)]
     (->> simple read-csv (write-csv string-writer))
     (is (= simple
+           (str string-writer))))
+
+  (let [string-writer (StringWriter.)]
+    (->> with-cr read-csv (write-csv string-writer))
+    (is (= with-cr
 	   (str string-writer)))))
 
 (deftest throw-if-quoted-on-eof
